@@ -7,7 +7,7 @@ const PostRouter = express.Router();
 //getting all requests
 PostRouter.get("/", async (req, res) => {
     try {
-        const data = await PostModel.find();
+        const data = await PostModel.find().populate('user');
         res.send({ mssg: "all posts", data: data }).status(200);
 
     } catch (error) {
@@ -19,7 +19,7 @@ PostRouter.get("/", async (req, res) => {
 PostRouter.get("/:id", async (req, res) => {
     const id = req.params.id;
     try {
-        const post = await PostModel.findById(id);
+        const post = await PostModel.findById(id).populate('user');
         res.send(post).status(200)
     } catch (error) {
         res.send(`error while getting : ${error}`);
